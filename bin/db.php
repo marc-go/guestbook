@@ -1,11 +1,5 @@
 <?php
-//Insert Database Informations here!
-$db = [
-	"server" => "localhost",
-	"user" => "",
-	"password" => "",
-	"name" => ""
-];
+require $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 
-$conn = new mysqli($db["server"], $db["user"], $db["password"], $db["name"]);
+$conn = new mysqli($db_host, $db_user, $db_pw, $db_name);
 ?>
