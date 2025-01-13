@@ -18,33 +18,7 @@ if (isset($_POST["name"]) && isset($_POST["text"]) && isset($_POST["mail"])) {
 	
 	$text = htmlspecialchars($_POST["text"]);
 	
-	$secretKey = '6LcEG5AqAAAAAPPfEKauCCfDqSPE3kxRE5h5V_0U';
-    $response = $_POST['g-recaptcha-response'];
-    $remoteIp = $_SERVER['REMOTE_ADDR'];
-
-    $url = "https://www.google.com/recaptcha/api/siteverify";
-    $data = [
-        'secret' => $secretKey,
-        'response' => $response,
-        'remoteip' => $remoteIp
-    ];
-
-    $options = [
-        'http' => [
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data)
-        ]
-    ];
-
-    $context  = stream_context_create($options);
-    $result = file_get_contents($url, false, $context);
-    $resultJson = json_decode($result);
-
-    if (!$resultJson->success) {
-		header("Location: /index.php?error=Captcha%20nicht%20geloest.");
-		exit;
-	}else{
+	
 		$date = date("d-m-Y");
 		$mail = $mail["value"];
 		
@@ -106,7 +80,6 @@ if (isset($_POST["name"]) && isset($_POST["text"]) && isset($_POST["mail"])) {
 					
 					mail($to, $subject, $html, $header);
 				}
-			}
 			
 			$rule = $rules->getRule("new_entry_mail_user");
 			if ($rule = 1) {
