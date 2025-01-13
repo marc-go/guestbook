@@ -23,7 +23,6 @@
                 <input type="text" name="name" placeholder="Name" required><br>
 				<input type="mail" name="mail" placeholder="Email" required><br>
                 <textarea name="text" placeholder="Text" required></textarea>
-				<div class="g-recaptcha" data-sitekey="6LcEG5AqAAAAACvFjzYM3Zo_Gf3Kk_QMsfa21Rws"></div>
                 <button type="submit">Eintragen!</button><br>
 				<small style="color: grey;">Deine Email Adresse wird nicht öffentlich angezeigt.</small>
             </form>
