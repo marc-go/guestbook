@@ -6,7 +6,7 @@ require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/check.php";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marc Goering // Gästebuch</title>
+  <title>Gästebuch</title>
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
