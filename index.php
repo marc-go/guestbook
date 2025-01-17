@@ -1,3 +1,6 @@
+<?php
+require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/check.php";
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
