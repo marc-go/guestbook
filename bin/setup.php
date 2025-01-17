@@ -169,6 +169,14 @@ foreach($rules as $rule => $value) {
 	if (!$stmt->execute()) {
 		error("Fehler beim ändern einer Einstellung.");
 	}
+	
+	@mkdir($_SERVER["DOCUMENT_ROOT"] . "/admin/users/", 0777);
+	
+	@mkdir($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $ad_user, 0777);
+	
+	if (!file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $ad_user . "/sessions.json", "{'array':true}")) {
+		error("Fehler beim erstellen einer Datei.");
+	}
 }
 
 $sql = "SELECT * FROM users";
@@ -184,7 +192,6 @@ if ($result->num_rows == 0) {
 		error("Fehler beim erstellen des Benutzers.");
 	}
 }
-
 
 $php = '
 <?php
