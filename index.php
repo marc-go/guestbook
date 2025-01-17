@@ -24,7 +24,7 @@ require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/check.php";
             <form action="bin/add.php" method="post">
                 <input type="text" name="name" placeholder="Name" required><br>
 				<input type="mail" name="mail" placeholder="Email" required><br>
-                <textarea name="text" placeholder="Text" required></textarea>
+                <textarea name="text" placeholder="Text" required></textarea><br>
                 <button type="submit">Eintragen!</button><br>
 				<small style="color: grey;">Deine Email Adresse wird nicht öffentlich angezeigt.</small>
             </form>
