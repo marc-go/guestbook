@@ -148,8 +148,6 @@ if (!$session->checkLogin()) {
 			  	  echo '
 			  	  <h3>' . $row["username"] . '</h3>
 			  	  <a href="users.php">Zurück</a><br><br><br>
-			  	  <input type="text" id="name-i" class="mdl-textfield__input" name="name" placeholder="Name" value="' . $row["username"] . '">
-			  	  <input type="text" id="mail-i" class="mdl-textfield__input" name="mail" placeholder="Email Adresse" value="' . $row["mail"] . '">
 			  	  <input type="password" id="pw-i" class="mdl-textfield__input" name="pw" placeholder="Passwort">
 			  	  <input type="password" id="pw2-i" class="mdl-textfield__input" name="pw2" placeholder="Passwort bestätigen"><br><br><br>
 			  	  <input type="hidden" name="id" value="' . $id . '">
