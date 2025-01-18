@@ -19,10 +19,8 @@ echo isset($_POST["pw"]) . "<br>";
 echo isset($_POST["pw2"]) . "<br>";
 echo isset($_POST["id"]) . "<br>";
 
-if (isset($_POST["name"]) && isset($_POST["mail"]) && isset($_POST["pw"]) && isset($_POST["pw2"]) && isset($_POST["id"])) {
+if (isset($_POST["pw"]) && isset($_POST["pw2"]) && isset($_POST["id"])) {
 	$id = intval($_POST["id"]);
-	$name = $_POST["name"];
-	$mail = $_POST["mail"];
 	$pw = hash("sha256", $_POST["pw"]);
 	$pw2 = hash("sha256", $_POST["pw2"]);
 	
@@ -32,9 +30,9 @@ if (isset($_POST["name"]) && isset($_POST["mail"]) && isset($_POST["pw"]) && iss
 	
 	require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/db.php";
 	
-	$sql = "UPDATE users SET username = ?, mail = ?, password = ? WHERE id = ?";
+	$sql = "UPDATE users SET password = ? WHERE id = ?";
 	$stmt = $conn->prepare($sql);
-	$stmt->bind_param("sssi", $name, $mail, $pw2, $id);
+	$stmt->bind_param("sssi", $pw2, $id);
 	
 	if (!$stmt->execute()) {
 		die('{"status":500, "error":"Es ist ein Fehler aufgetreten"}');
