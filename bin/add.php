@@ -17,121 +17,145 @@ if (isset($_POST["name"]) && isset($_POST["text"]) && isset($_POST["mail"])) {
 	}
 	
 	$text = htmlspecialchars($_POST["text"]);
+	$text = str_replace(["**", "**"], ["<b>", "</b>"], $text);
 	
+	$date = date("d-m-Y");
+	$mail = $mail["value"];
+		
+	require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/db.php";
+	require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/rules.php";
+		
+	$ip = $_SERVER["REMOTE_ADDR"];
+		
+	$sql = "SELECT * FROM spam WHERE ip = ?";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("s", $ip);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+		
+	if ($row["date"] == date("d")) {
+		header("Location: ../index.php?error=Es ist nur ein Eintrag am Tag möglich.");
+		exit;
+	}
 	
-		$date = date("d-m-Y");
-		$mail = $mail["value"];
+	$sql = "INSERT INTO spam (ip, date) VALUES (?, ?)";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("ss", $ip, date("d"));
 		
-		require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/db.php";
-		require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/rules.php";
+	if (!$stmt->execute()) {
+		header("Location: ../index.php?error=Fehler%20beim%20Spamschutz");
+		exit;
+	}
+	
+	$rules = new ruleManager();
+	$int = $rules->getRule("allow_entrys");
 		
-		$rules = new ruleManager();
-		$int = $rules->getRule("allow_entrys");
+	$sql = "INSERT INTO entrys (name, mail, date, text, status) VALUES(?, ?, ?, ?, ?)";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("ssssi", $name, $mail, $date, $text, $int);
 		
-		$sql = "INSERT INTO entrys (name, mail, date, text, status) VALUES(?, ?, ?, ?, ?)";
-		$stmt = $conn->prepare($sql);
-		$stmt->bind_param("ssssi", $name, $mail, $date, $text, $int);
-		
-		if ($stmt->execute()) {
-			$rule = $rules->getRule("new_entry_mail_admin");
+	if ($stmt->execute()) {
+		$rule = $rules->getRule("new_entry_mail_admin");
 			
-			if ($rule = 1) {
-				$html = '
-				<!DOCTYPE html>
-				<html lang="de">
-					<head>
-    					<meta charset="UTF-8">
-    					<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    					<title>Neuer Eintrag</title>
-						<style>
-							body {
-								font-family: Arial, sans-serif;
-								color: #000000;
-								background-color: #ffffff;
-								padding: 20px;
-							}
-						</style>
-					</head>
-					<body>
-    					<div class="page-content">
-        					<div class="content">
-            					<h1>Neuer Eintrag</h1>
-            					<p>Es gibt einen neuen Eintrag in deinen Gaestebuch.</p>
-            					<a href="https://' . $_SERVER["SERVER_NAME"] . '/admin/">
-									<button>Zum Admin Panal</button>
-								</a>
-        					</div>
-    					</div>
-					</body>
-				</html>
-				';
+		if ($rule = 1) {
+			$html = '
+			<!DOCTYPE html>
+			<html lang="de">
+				<head>
+    				<meta charset="UTF-8">
+    				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    				<title>Neuer Eintrag</title>
+					<style>
+						body {
+							font-family: Arial, sans-serif;
+							color: #000000;
+							background-color: #ffffff;
+							padding: 20px;
+						}
+					</style>
+				</head>
+				<body>
+    				<div class="page-content">
+        				<div class="content">
+            				<h1>Neuer Eintrag</h1>
+            				<p>Es gibt einen neuen Eintrag in deinen Gaestebuch.</p>
+            				<a href="https://' . $_SERVER["SERVER_NAME"] . '/admin/">
+								<button>Zum Admin Panal</button>
+							</a>
+        				</div>
+    				</div>
+				</body>
+			</html>
+			';
 				
-				$sql = "SELECT * FROM users";
-				$stmt = $conn->prepare($sql);
-				$stmt->execute();
-				$result = $stmt->get_result();
-				
-				while($row = $result->fetch_assoc()) {
-					$to = $row["mail"];
-					$subject = "Eintrag hinzugefügt";
-					$header = 'From: gaestebuch@' . $_SERVER["SERVER_NAME"] . "\r\n" .
-					'Content-Type: text/html' . "\r\n" .
-    				'X-Mailer: PHP/' . phpversion();
-					
-					mail($to, $subject, $html, $header);
-				}
+			$sql = "SELECT * FROM users";
+			$stmt = $conn->prepare($sql);
+			$stmt->execute();
+			$result = $stmt->get_result();
 			
-			$rule = $rules->getRule("new_entry_mail_user");
-			if ($rule = 1) {
-				$html = '
-				<!DOCTYPE html>
-				<html lang="de">
-					<head>
-    					<meta charset="UTF-8">
-    					<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    					<title>Neuer Eintrag</title>
-						<style>
-							body {
-								font-family: Arial, sans-serif;
-								color: #000000;
-								background-color: #ffffff;
-								padding: 20px;
-							}
-						</style>
-					</head>
-					<body>
-    					<div class="page-content">
-        					<div class="content">
-            					<h1>Neuer Eintrag</h1>
-            					<p>Dein neuer Eintrag war erfolgreich.</p>
-            					<a href="https://' . $_SERVER["SERVER_NAME"] . '">
-									<button>Zum Gaestebuch</button>
-								</a>
-        					</div>
-    					</div>
-					</body>
-				</html>
-				';
-				
-				$to = $_POST["mail"];
-				$subject = "Neuer Eintrag";
+			while($row = $result->fetch_assoc()) {
+				$to = $row["mail"];
+				$subject = "Eintrag hinzugefügt";
 				$header = 'From: gaestebuch@' . $_SERVER["SERVER_NAME"] . "\r\n" .
 				'Content-Type: text/html' . "\r\n" .
     			'X-Mailer: PHP/' . phpversion();
-				
+					
 				mail($to, $subject, $html, $header);
 			}
-				
-			if ($int = 1) {
-				header("Location: /index.php");
-				exit;
-			}else{
-				$stmt->close();
-				$conn->close();
+		}
 			
-				header("Location: /index.php?error=Fehler%20beim%20eintragen.");
-				exit;
-			}
+		$rule = $rules->getRule("new_entry_mail_user");
+		if ($rule = 1) {
+			$html = '
+			<!DOCTYPE html>
+			<html lang="de">
+				<head>
+    				<meta charset="UTF-8">
+    				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    				<title>Neuer Eintrag</title>
+					<style>
+						body {
+							font-family: Arial, sans-serif;
+							color: #000000;
+							background-color: #ffffff;
+							padding: 20px;
+						}
+					</style>
+				</head>
+				<body>
+    				<div class="page-content">
+        				<div class="content">
+            				<h1>Neuer Eintrag</h1>
+            				<p>Dein neuer Eintrag war erfolgreich.</p>
+            				<a href="https://' . $_SERVER["SERVER_NAME"] . '">
+								<button>Zum Gaestebuch</button>
+							</a>
+        				</div>
+    				</div>
+				</body>
+			</html>
+			';
+				
+			$to = $_POST["mail"];
+			$subject = "Neuer Eintrag";
+			$header = 'From: gaestebuch@' . $_SERVER["SERVER_NAME"] . "\r\n" .
+			'Content-Type: text/html' . "\r\n" .
+    		'X-Mailer: PHP/' . phpversion();
+				
+			mail($to, $subject, $html, $header);
+		}
+				
+		if ($int = 1) {
+			header("Location: /index.php");
+			exit;
+		}else{
+			$stmt->close();
+			$conn->close();
+			
+			header("Location: /index.php?error=Fehler%20beim%20eintragen.");
+			exit;
 		}
 	}
+}
 ?>
