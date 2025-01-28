@@ -134,5 +134,4 @@ if (isset($_POST["name"]) && isset($_POST["text"]) && isset($_POST["mail"])) {
 			}
 		}
 	}
-}
 ?>
