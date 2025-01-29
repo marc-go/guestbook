@@ -123,6 +123,15 @@ if (!$conn->query($sql)) {
 	error("Fehler beim erstellen der Datenbank Tabelle.");
 }
 
+$sql = "CREATE TABLE IF NOT EXISTS spam (
+	ip VARCHAR(100),
+	date VARCHAR(100)
+)";
+	
+if (!$conn->query($sql)) {
+	error("Fehler beim erstellen der Datenbank Tabelle.");
+}
+
 $sql = "CREATE TABLE IF NOT EXISTS entrys (
 	id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(100) UNIQUE,
