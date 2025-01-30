@@ -78,5 +78,6 @@ require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/check.php";
       </div>
     </main>
   </div>
+  <script src="/js/remove.js"></script>
 </body>
 </html>
