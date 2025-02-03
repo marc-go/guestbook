@@ -17,7 +17,6 @@ if (isset($_POST["name"]) && isset($_POST["text"]) && isset($_POST["mail"])) {
 	}
 	
 	$text = htmlspecialchars($_POST["text"]);
-	$text = str_replace(["**", "**"], ["<b>", "</b>"], $text);
 	
 	$date = date("d-m-Y");
 	$mail = $mail["value"];
