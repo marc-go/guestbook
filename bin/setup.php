@@ -158,7 +158,8 @@ $rules = [
 	"allow_entrys" => 1,
 	"new_entry_mail_admin" => 1,
 	"new_entry_mail_user" => 1,
-	"new_user_mail_admin" => 1
+	"new_user_mail_admin" => 1,
+	"spamblock" => 1
 ];
 
 foreach($rules as $rule => $value) {
