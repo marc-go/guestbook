@@ -132,7 +132,7 @@ if (!$session->checkLogin()) {
 			<?php
 			require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/db.php";
 			
-			$sql = "SELECT * FROM entrys WHERE status = ?";
+			$sql = "SELECT * FROM entrys WHERE status = ? ORDER BY id DESC";
 			$stmt = $conn->prepare($sql);
 			$int = 0;
 			$stmt->bind_param("i", $int);
@@ -145,6 +145,9 @@ if (!$session->checkLogin()) {
 					<h3>' . $row["name"] . '</h3>
 					<span><b>' . $row["mail"] . '</b></span><br>
 					<span>' . $row["text"] . '</span><br><br>
+					<a href="edit_entry.php?id=' . $row["id"] . '">
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Bearbeiten</button>
+					</a><br><br>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="block(' . $row["id"] . ')">Sperren</button>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="remove(' . $row["id"] . ')">Löschen</button>
 				</div>';
@@ -164,7 +167,7 @@ if (!$session->checkLogin()) {
 			
 			$int = 1;
 			
-			$sql = "SELECT * FROM entrys WHERE status = ?";
+			$sql = "SELECT * FROM entrys WHERE status = ? ORDER BY id DESC";
 			$stmt = $conn->prepare($sql);
 			$stmt->bind_param("i", $int);
 			$stmt->execute();
@@ -176,6 +179,9 @@ if (!$session->checkLogin()) {
 					<h3>' . $row["name"] . '</h3>
 					<span><b>' . $row["mail"] . '</b></span><br>
 					<span>' . $row["text"] . '</span><br><br>
+					<a href="edit_entry.php?id=' . $row["id"] . '">
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Bearbeiten</button>
+					</a><br><br>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="allow(' . $row["id"] . ')">Erluaben</button>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="block(' . $row["id"] . ')">Sperren</button><br>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="remove(' . $row["id"] . ')">Löschen</button>
@@ -196,7 +202,7 @@ if (!$session->checkLogin()) {
 			
 			$int = 2;
 			
-			$sql = "SELECT * FROM entrys WHERE status = ?";
+			$sql = "SELECT * FROM entrys WHERE status = ? ORDER BY id DESC";
 			$stmt = $conn->prepare($sql);
 			$stmt->bind_param("i", $int);
 			$stmt->execute();
@@ -208,6 +214,9 @@ if (!$session->checkLogin()) {
 					<h3>' . $row["name"] . '</h3>
 					<span><b>' . $row["mail"] . '</b></span><br>
 					<span>' . $row["text"] . '</span><br><br>
+					<a href="edit_entry.php?id=' . $row["id"] . '">
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Bearbeiten</button>
+					</a><br><br>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="allow(' . $row["id"] . ')">Entsperren</button>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="remove(' . $row["id"] . ')">Löschen</button>
 				</div>';
