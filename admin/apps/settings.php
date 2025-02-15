@@ -128,26 +128,31 @@ if (!$session->checkLogin()) {
 		  $rule[2] = $rules->getRule("new_entry_mail_admin") == 1 ? "checked" : "";
 		  $rule[3] = $rules->getRule("new_user_mail_admin") == 1 ? "checked" : "";
 		  $rule[4] = $rules->getRule("new_entry_mail_user") == 1 ? "checked" : "";
+		  $rule[5] = $rules->getRule("spamblock") == 1 ? "checked" : "";
 		  ?>
           <h1>Gästebuch // Administration</h1><br>
 		  <h2>Einstellungen</h2>
 		  <h3>Einträge</h3>
-		  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="allow_entrys">
-  			<input type="checkbox" id="allow_entrys" class="mdl-checkbox__input" <?php echo $rule[1]; ?>>
-  			<span class="mdl-checkbox__label">Einträge müssen genehmigt werden</span>
+		  <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="allow_entrys">
+  			<input type="checkbox" id="allow_entrys" class="mdl-switch__input" <?php echo $rule[1]; ?>>
+  			<span class="mdl-switch__label">Einträge müssen genehmigt werden</span>
 		  </label>
 		  <h3>Benachrichtigungen</h3>
-		  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="new_entry_mail_admin">
-  			<input type="checkbox" id="new_entry_mail_admin" class="mdl-checkbox__input" <?php echo $rule[2]; ?>>
-  			<span class="mdl-checkbox__label">Bei neuen Einträgen alle Admins benachrichtigen</span>
+		  <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="new_entry_mail_admin">
+  			<input type="checkbox" id="new_entry_mail_admin" class="mdl-switch__input" <?php echo $rule[2]; ?>>
+  			<span class="mdl-switch__label">Bei neuen Einträgen alle Admins benachrichtigen</span>
 		  </label><br><br>
-		  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="new_user_mail_admin">
-  			<input type="checkbox" id="new_user_mail_admin" class="mdl-checkbox__input" <?php echo $rule[3]; ?>>
-  			<span class="mdl-checkbox__label">Bei einer erstellung einen neues Benutzers alle Admins benachrichtigen</span>
+		  <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="new_user_mail_admin">
+  			<input type="checkbox" id="new_user_mail_admin" class="mdl-switch__input" <?php echo $rule[3]; ?>>
+  			<span class="mdl-switch__label">Bei einer erstellung einen neues Benutzers alle Admins benachrichtigen</span>
 		  </label><br><br>
-		  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="new_entry_mail_user">
-  			<input type="checkbox" id="new_entry_mail_user" class="mdl-checkbox__input" <?php echo $rule[4]; ?>>
-  			<span class="mdl-checkbox__label">Nachricht an ersteller des Eintrags senden</span>
+		  <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="new_entry_mail_user">
+  			<input type="checkbox" id="new_entry_mail_user" class="mdl-switch__input" <?php echo $rule[4]; ?>>
+  			<span class="mdl-switch__label">Nachricht an ersteller des Eintrags senden</span>
+		  </label><br><br>
+		  <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="spamblock">
+  			<input type="checkbox" id="spamblock" class="mdl-switch__input" <?php echo $rule[5]; ?>>
+  			<span class="mdl-switch__label">Spamfilter</span>
 		  </label><br><br><br>
 		  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white" onclick="save()">Speichern</button>
 		</div>
