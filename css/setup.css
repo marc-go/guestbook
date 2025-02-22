@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    font-size: 50pt;
+}
+
+h3 {
+    font-size: 30pt;
+}
+
+p {
+    font-size: 20pt;
+}
+
+button {
+    width: 100px;
+    height: 37px;
+    border: none;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+input {
+    width: 200px;
+    height: 20px;
+    border: 1px solid #808080;
+    border-radius: 100px;
+    padding: 5px;
+    margin-bottom: 5px;
+    outline: none;
+    text-align: center;
+}
+
+::selection {
+	color: #ffffff;
+	background-color: #000000;
+}
+
+::-moz-selection {
+	color: #ffffff;
+	background-color: #000000;
+}
