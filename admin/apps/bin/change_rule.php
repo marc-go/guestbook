@@ -15,6 +15,7 @@ $rules["allow_entrys"] = "";
 $rules["new_user_mail_admin"] = "";
 $rules["new_entry_mail_user"] = "";
 $rules["new_entry_mail_admin"] = "";
+$rules["spamblock"] = "";
 
 require $_SERVER["DOCUMENT_ROOT"] . "/admin/bin/rules.php";
 $rule = new ruleManager();
