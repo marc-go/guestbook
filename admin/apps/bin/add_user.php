@@ -21,8 +21,10 @@ if (isset($_POST["name"]) && isset($_POST["mail"]) && isset($_POST["pw"]) && iss
 		die('{"status":500, "error":"Die Passwörter stimmen nicht überein."}');
 	}
 	
-	if (!mkdir($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $name, 0777)) {
-		die('{"status":500, "error":"Es gab einen Fehler beim erstellen eines Ordners."}');
+	if (!is_dir($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $name)) {
+		if (!mkdir($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $name, 0777, true)) {
+			die('{"status":500, "error":"Es gab einen Fehler beim erstellen eines Ordners."}');
+		}
 	}
 	
 	if (!file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $name . "/sessions.json", '{"array":true}')) {
@@ -36,7 +38,7 @@ if (isset($_POST["name"]) && isset($_POST["mail"]) && isset($_POST["pw"]) && iss
 	$stmt->execute();
 	$result = $stmt->get_result();
 	
-	if ($result->num_rows = 1) {
+	if ($result->num_rows == 1) {
 		die('{"status":500, "error":"Der Benutzer exestiert schon."}');
 	}
 	
