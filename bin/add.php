@@ -16,7 +16,11 @@ if (isset($_POST["name"]) && isset($_POST["text"]) && isset($_POST["mail"])) {
 		exit;
 	}
 	
+	require $_SERVER["DOCUMENT_ROOT"] . "/bin/md.php";
+	
+	$md = new Parsedown();
 	$text = htmlspecialchars($_POST["text"]);
+	$text = $md->text($text);
 	
 	$date = date("d-m-Y");
 	$mail = $mail["value"];
@@ -148,7 +152,7 @@ if (isset($_POST["name"]) && isset($_POST["text"]) && isset($_POST["mail"])) {
 		}
 				
 		if ($int = 1) {
-			header("Location: /index.php");
+			header("Location: /index.php?error=Dein%20Eintrag%20muss%20eventuell%20noch%20genehmigt%20werden.");
 			exit;
 		}else{
 			$stmt->close();
