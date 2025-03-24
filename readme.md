@@ -10,3 +10,8 @@ Type your Database informations. Note: This user must have Read and write rights
 
 ### Admin User
 You can choose these datas.
+
+## Credits
+### Login-Design
+Jakob Eden
+jakob48.d
