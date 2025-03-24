@@ -32,7 +32,7 @@ if (isset($_POST["user"]) && isset($_POST["pw"])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows <= 0) {
-        $error = "Der Benutzername bzw. das Passwort sind falsch.";
+        $error = "That were false.";
     } else {
         $file = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $user . "/sessions.json");
         if (filesize($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $user . "/sessions.json") !== 0) {
@@ -76,24 +76,69 @@ if (isset($_POST["user"]) && isset($_POST["pw"])) {
 <!DOCTYPE html>
 <html lang="de">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login beim Gästebuch</title>
-    <link rel="stylesheet" href="css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f4;
+        }
+        .login-container {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-btn:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div id="login">
-        <h2>Login beim Gästebuch</h2>
-        <form method="post" action="#">
-            <?php
+    <div class="login-container">
+        <h2>Login</h2>
+        <span><?php if (isset($error)) { echo $error; } ?></span><br>
+        <form>
+	    <?php
             if (isset($_GET["from"])) {
                 echo '<input type="hidden" name="from" value="' . $_GET["from"] . '">';
             }
             ?>
-            <input id="input" placeholder="Benutzername" type="text" name="user" required><br>
-            <input id="input" placeholder="Passwort" type="password" name="pw" required><br>
-            <span id="error"><?php if (isset($error)) { echo $error; } ?></span><br>
-            <input id="button" type="submit" value="Anmelden">
+            <input type="text" placeholder="Benutzername" required>
+            <input type="password" placeholder="Passwort" required>
+            <button type="submit" class="login-btn">Anmelden</button>
         </form>
     </div>
 </body>
