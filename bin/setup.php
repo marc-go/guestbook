@@ -177,7 +177,7 @@ foreach($rules as $rule => $value) {
 	
 	@mkdir($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $ad_user, 0777);
 	
-	if (!file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $ad_user . "/sessions.json", "{'array':true}")) {
+	if (!file_put_contents($_SERVER["DOCUMENT_ROOT"] . "/admin/users/" . $ad_user . "/sessions.json", '{"array":true}')) {
 		error("Fehler beim erstellen einer Datei.");
 	}
 }
