@@ -1,0 +1,9 @@
+{
+	"allow_entrys":"Entries must be approved",
+	"add_entrys":"New Entrys are allowed",
+	"delete":"The user can edit or delete his entry",
+	"new_entry_mail_admin":"All Admins get a mail for a new entry",
+	"new_user_mail_admin":"All Admin get a mail for a new user",
+	"new_entry_mail_user":"The user get a mail for his entry",
+	"spamblock":"Spamblock"
+}
