@@ -148,7 +148,7 @@ if (!$conn->query($sql)) {
 $sql = "CREATE TABLE IF NOT EXISTS spam (
 	id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	ip VARCHAR(100),
-	data VARCHAR(100)
+	date VARCHAR(100)
 )";
 if (!$conn->query($sql)) {
 	error("Fehler beim erstellen der Datenbank Tabelle.");
