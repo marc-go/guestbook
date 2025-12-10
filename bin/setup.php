@@ -3,6 +3,11 @@ ini_set("display_errors", 1);
 ini_set("display_startup_error", 1);
 error_reporting(E_ALL);
 
+if(is_file($_SERVER["DOCUMENT_ROOT"])) {
+	die("Already set up");
+	exit;
+}
+
 function error($error) {
 	$html = '
 	<!DOCTYPE html>
